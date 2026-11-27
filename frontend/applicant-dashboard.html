@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Applicant Dashboard | AI-Powered Recruitment Agent</title>
+
+    <link rel="stylesheet" href="applicant-dashboard.css" />
+    <link rel="stylesheet" href="chatbot.css" />
+  </head>
+
+  <body data-chatbot-role="applicant">
+
+    <div class="dashboard-layout">
+
+      <aside class="sidebar">
+
+        <a href="home.html" class="logo">
+          <span class="logo-icon">AI</span>
+          <span class="logo-text">
+            Recruitment
+            <small>AGENT</small>
+          </span>
+        </a>
+
+        <div class="sidebar-section">
+          <p class="sidebar-label">WORKSPACE</p>
+
+          <nav class="sidebar-nav">
+            <a href="#overview" class="nav-link active">
+              <span class="nav-icon">⌂</span>
+              Overview
+            </a>
+
+            <a href="#upload-section" class="nav-link">
+              <span class="nav-icon">↑</span>
+              Upload Resume
+            </a>
+
+            <a href="#resumes-section" class="nav-link">
+              <span class="nav-icon">▤</span>
+              My Resumes
+            </a>
+
+            <a href="#jobs-section" class="nav-link">
+              <span class="nav-icon">▣</span>
+              Browse Jobs
+            </a>
+
+            <a href="#match-section" class="nav-link">
+              <span class="nav-icon">◎</span>
+              Resume Matching
+            </a>
+
+            <a href="#ats-section" class="nav-link">
+              <span class="nav-icon">◈</span>
+              ATS Score
+            </a>
+
+            <a href="#history-section" class="nav-link">
+              <span class="nav-icon">◷</span>
+              Match History
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="sidebar-help">
+            <div class="help-icon">?</div>
+            <strong>Need assistance?</strong>
+            <p>Manage your resume and discover new opportunities.</p>
+          </div>
+
+          <a href="home.html" class="sidebar-home">
+            ← Back to Home
+          </a>
+        </div>
+
+      </aside>
+
+      <main class="main-content">
+
+        <header class="topbar">
+
+          <div class="topbar-left">
+            <p class="topbar-label">APPLICANT PORTAL</p>
+            <h2>My Workspace</h2>
+          </div>
+
+          <div class="topbar-right">
+            <div class="user-profile">
+              <div class="user-avatar">A</div>
+              <div class="user-details">
+                <strong id="userName">Applicant</strong>
+                <span>Applicant Account</span>
+              </div>
+            </div>
+
+            <button
+              id="logoutButton"
+              class="logout-button"
+              type="button">
+              Logout
+            </button>
+          </div>
+
+        </header>
+
+        <div class="dashboard-container">
+
+          <section class="welcome-section" id="overview">
+
+            <div class="welcome-content">
+              <p class="eyebrow">YOUR CAREER JOURNEY STARTS HERE</p>
+
+              <h1>Welcome back!</h1>
+
+              <p>
+                Manage your resumes, explore opportunities, and use
+                AI-powered tools to improve your job search.
+              </p>
+            </div>
+
+            <div class="welcome-decoration">
+              <div class="welcome-decoration-icon">✦</div>
+              <span>AI-Powered Career Assistant</span>
+            </div>
+
+          </section>
+
+          <p id="message" class="message" role="status"></p>
+
+          <section class="dashboard-card" id="upload-section">
+
+            <div class="card-heading">
+              <div class="heading-icon blue">↑</div>
+              <div>
+                <h2>Upload Your Resume</h2>
+                <p>Upload your latest resume to get started.</p>
+              </div>
+            </div>
+
+            <form id="uploadForm" class="upload-form">
+
+              <div class="upload-area">
+                <div class="upload-icon">↑</div>
+
+                <label for="resumeFile">
+                  Choose your resume PDF
+                </label>
+
+                <p>PDF format only · Maximum file size 5 MB</p>
+
+                <input
+                  id="resumeFile"
+                  type="file"
+                  accept=".pdf,application/pdf"
+                  required />
+              </div>
+
+              <button class="primary-button" type="submit">
+                Upload Resume
+              </button>
+
+            </form>
+
+            <p id="uploadResult" class="upload-result" role="status"></p>
+
+          </section>
+
+          <section class="dashboard-card" id="resumes-section">
+
+            <div class="section-heading">
+              <div class="card-heading">
+                <div class="heading-icon purple">▤</div>
+                <div>
+                  <h2>My Saved Resumes</h2>
+                  <p>View and manage your uploaded resumes.</p>
+                </div>
+              </div>
+
+              <button
+                id="refreshResumesButton"
+                class="secondary-button"
+                type="button">
+                ↻ Refresh
+              </button>
+            </div>
+
+            <div id="savedResumesList" class="items">
+              <p>Loading your saved resumes...</p>
+            </div>
+
+          </section>
+
+          <section class="dashboard-card" id="jobs-section">
+
+            <div class="section-heading">
+              <div class="card-heading">
+                <div class="heading-icon green">▣</div>
+                <div>
+                  <h2>Explore Available Jobs</h2>
+                  <p>Discover opportunities that match your skills.</p>
+                </div>
+              </div>
+
+              <button
+                id="loadJobsButton"
+                class="secondary-button"
+                type="button">
+                ↻ Refresh Jobs
+              </button>
+            </div>
+
+            <div id="jobsList" class="items"></div>
+
+          </section>
+
+          <section class="dashboard-card" id="match-section">
+
+            <div class="card-heading">
+              <div class="heading-icon blue">◎</div>
+              <div>
+                <h2>AI Resume Matching</h2>
+                <p>Find out how closely your resume matches a job.</p>
+              </div>
+            </div>
+
+            <form id="matchForm" class="form-grid">
+
+              <div class="form-group">
+                <label for="resumeId">Select Your Resume</label>
+
+                <select id="resumeId" required>
+                  <option value>Select a saved resume</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="jobId">Select Job</label>
+
+                <select id="jobId" required>
+                  <option value>Select a job</option>
+                </select>
+              </div>
+
+              <div class="form-action">
+                <button class="primary-button" type="submit">
+                  Find My Match
+                </button>
+              </div>
+
+            </form>
+
+            <div id="matchResult" class="result" hidden></div>
+
+          </section>
+
+          <section class="dashboard-card" id="ats-section">
+
+            <div class="card-heading">
+              <div class="heading-icon orange">◈</div>
+              <div>
+                <h2>ATS Score Checker</h2>
+                <p>Evaluate your resume against a specific job description.</p>
+              </div>
+            </div>
+
+            <form id="atsForm" class="form-grid">
+
+              <div class="form-group">
+                <label for="atsResumeId">Select Your Resume</label>
+
+                <select id="atsResumeId" required>
+                  <option value>Select a saved resume</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="atsJobId">Select Job</label>
+
+                <select id="atsJobId" required>
+                  <option value>Select a job</option>
+                </select>
+              </div>
+
+              <div class="form-action">
+                <button class="primary-button" type="submit">
+                  Check ATS Score
+                </button>
+              </div>
+
+            </form>
+
+            <div id="atsResult" class="result" hidden></div>
+
+          </section>
+
+          <section class="dashboard-card" id="history-section">
+
+            <div class="section-heading">
+              <div class="card-heading">
+                <div class="heading-icon purple">◷</div>
+                <div>
+                  <h2>Match History</h2>
+                  <p>Review your previous resume matching results.</p>
+                </div>
+              </div>
+
+              <button
+                id="loadHistoryButton"
+                class="secondary-button"
+                type="button">
+                View History
+              </button>
+            </div>
+
+            <div id="historyList" class="items"></div>
+
+          </section>
+
+          <footer class="dashboard-footer">
+            <p>© 2026 AI-Powered Recruitment Agent. All rights reserved.</p>
+            <span>Intelligent Hiring · Smarter Careers</span>
+          </footer>
+
+        </div>
+
+      </main>
+
+    </div>
+
+    <!-- APPLICANT CHATBOT -->
+    <div class="chatbot-widget" id="chatbotWidget">
+
+      <button
+        class="chatbot-toggle"
+        id="chatbotToggle"
+        type="button"
+        aria-label="Open AI Career Assistant"
+        aria-expanded="false">
+        💬
+      </button>
+
+      <div
+        class="chatbot-panel"
+        id="chatbotPanel"
+        role="dialog"
+        aria-label="AI Career Assistant"
+        hidden>
+
+        <div class="chatbot-header">
+
+          <div>
+            <h3 id="chatbotTitle">AI Career Assistant</h3>
+            <p id="chatbotSubtitle">Your personal career helper</p>
+          </div>
+
+          <div class="chatbot-header-actions">
+
+            <button
+              id="chatbotClear"
+              type="button"
+              title="Clear conversation"
+              aria-label="Clear conversation">
+              ↻
+            </button>
+
+            <button
+              id="chatbotClose"
+              type="button"
+              title="Close chatbot"
+              aria-label="Close chatbot">
+              ×
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          class="chatbot-messages"
+          id="chatbotMessages"
+          aria-live="polite"
+          aria-relevant="additions text">
+        </div>
+
+        <form class="chatbot-input-area" id="chatbotForm">
+
+          <textarea
+            id="chatbotInput"
+            rows="2"
+            maxlength="2000"
+            placeholder="Ask about resumes, jobs or interviews..."
+            aria-label="Type your message"
+            required>
+          </textarea>
+
+          <button
+            class="chatbot-send"
+            id="chatbotSend"
+            type="submit">
+            Send
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <script src="applicant-dashboard.js"></script>
+    <script src="chatbot.js"></script>
+
+  </body>
+</html>

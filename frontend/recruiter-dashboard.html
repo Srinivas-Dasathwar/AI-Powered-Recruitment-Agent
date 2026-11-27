@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Recruiter Dashboard | AI-Powered Recruitment Agent</title>
+
+    <link rel="stylesheet" href="recruiter-dashboard.css" />
+    <link rel="stylesheet" href="chatbot.css" />
+  </head>
+
+  <body data-chatbot-role="recruiter">
+
+    <div class="dashboard-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <a href="home.html" class="logo">
+          <span class="logo-icon">AI</span>
+          <span class="logo-text">Recruitment Agent</span>
+        </a>
+
+        <div class="sidebar-label">RECRUITER MENU</div>
+
+        <nav class="sidebar-nav">
+
+          <a href="#overview" class="nav-link active">
+            <span class="nav-icon">⌂</span>
+            Overview
+          </a>
+
+          <a href="#create-job-section" class="nav-link">
+            <span class="nav-icon">＋</span>
+            Post a Job
+          </a>
+
+          <a href="#jobs-section" class="nav-link">
+            <span class="nav-icon">▤</span>
+            Manage Jobs
+          </a>
+
+          <a href="#applicants-section" class="nav-link">
+            <span class="nav-icon">♙</span>
+            Applicants
+          </a>
+
+          <a href="#matches-section" class="nav-link">
+            <span class="nav-icon">◎</span>
+            Match Results
+          </a>
+
+          <a href="#history-section" class="nav-link">
+            <span class="nav-icon">◷</span>
+            Interview History
+          </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+          <div class="sidebar-role">
+            <span class="role-indicator"></span>
+            Recruiter Portal
+          </div>
+
+          <p>AI-Powered Recruitment Agent</p>
+
+        </div>
+
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+
+        <header class="topbar">
+
+          <div class="topbar-heading">
+            <span class="topbar-label">WORKSPACE</span>
+            <h2>Recruiter Dashboard</h2>
+          </div>
+
+          <div class="topbar-actions">
+
+            <div class="user-profile">
+              <div class="user-avatar">R</div>
+              <span id="userName">Recruiter</span>
+            </div>
+
+            <button
+              id="logoutButton"
+              class="logout-button"
+              type="button">
+              Logout
+            </button>
+
+          </div>
+
+        </header>
+
+        <div class="dashboard-container">
+
+          <!-- OVERVIEW -->
+          <section id="overview" class="welcome-section">
+
+            <div>
+              <p class="eyebrow">RECRUITER PORTAL</p>
+
+              <h1>Welcome to your workspace</h1>
+
+              <p>
+                Manage job opportunities, review applicants, evaluate
+                candidates, and make smarter hiring decisions.
+              </p>
+            </div>
+
+          </section>
+
+          <!-- GLOBAL MESSAGE -->
+          <p
+            id="message"
+            class="message"
+            role="status"
+            aria-live="polite"
+            hidden>
+          </p>
+
+          <!-- STATISTICS -->
+          <section class="stats-section">
+
+            <div class="section-title">
+              <div>
+                <h2>Hiring Overview</h2>
+                <p>Track your recruitment activity</p>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+
+              <div class="stat-card">
+                <div class="stat-icon jobs-icon">▤</div>
+                <span>Total Jobs</span>
+                <strong id="totalJobsStat">0</strong>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon applications-icon">♙</div>
+                <span>Total Applications</span>
+                <strong id="totalApplicationsStat">0</strong>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon pending-icon">◷</div>
+                <span>Pending</span>
+                <strong id="pendingStat">0</strong>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon shortlisted-icon">✓</div>
+                <span>Shortlisted</span>
+                <strong id="shortlistedStat">0</strong>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon rejected-icon">×</div>
+                <span>Rejected</span>
+                <strong id="rejectedStat">0</strong>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon hired-icon">★</div>
+                <span>Hired</span>
+                <strong id="hiredStat">0</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- CREATE JOB -->
+          <section id="create-job-section" class="dashboard-card">
+
+            <div class="card-heading">
+              <div class="heading-icon">＋</div>
+
+              <div>
+                <h2>Post a New Job</h2>
+                <p>Create a job opportunity for potential applicants.</p>
+              </div>
+            </div>
+
+            <form id="jobForm" class="job-form">
+
+              <div class="form-grid">
+
+                <div class="form-group">
+                  <label for="jobTitle">Job Title</label>
+
+                  <input
+                    id="jobTitle"
+                    type="text"
+                    maxlength="200"
+                    placeholder="e.g. Python Developer"
+                    required />
+                </div>
+
+                <div class="form-group">
+                  <label for="company">Company Name</label>
+
+                  <input
+                    id="company"
+                    type="text"
+                    maxlength="200"
+                    placeholder="Enter company name"
+                    required />
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="description">Job Description</label>
+
+                <textarea
+                  id="description"
+                  rows="5"
+                  placeholder="Describe the role, responsibilities, and qualifications..."
+                  required>
+                </textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="requiredSkills">Required Skills</label>
+
+                <input
+                  id="requiredSkills"
+                  type="text"
+                  placeholder="python, fastapi, sql, docker"
+                  required />
+
+                <small>Separate skills using commas.</small>
+              </div>
+
+              <button class="primary-button" type="submit">
+                Publish Job
+              </button>
+
+            </form>
+
+          </section>
+
+          <!-- MANAGE JOBS -->
+          <section id="jobs-section" class="dashboard-card">
+
+            <div class="section-heading">
+
+              <div class="card-heading">
+                <div class="heading-icon">▤</div>
+
+                <div>
+                  <h2>Manage Job Listings</h2>
+                  <p>View, edit, and delete your published jobs.</p>
+                </div>
+              </div>
+
+              <button
+                id="loadJobsButton"
+                class="secondary-button"
+                type="button">
+                Refresh Jobs
+              </button>
+
+            </div>
+
+            <div id="jobsList" class="items"></div>
+
+          </section>
+
+          <!-- APPLICANTS -->
+          <section id="applicants-section" class="dashboard-card">
+
+            <div class="card-heading">
+              <div class="heading-icon">♙</div>
+
+              <div>
+                <h2>Applicants' Resumes</h2>
+
+                <p>
+                  Review applicant resumes, download PDFs, update
+                  application statuses, and perform AI-powered analysis.
+                </p>
+              </div>
+            </div>
+
+            <div id="applicantsList" class="items">
+              <p>Loading applicants...</p>
+            </div>
+
+          </section>
+
+          <!-- MATCH RESULTS -->
+          <section id="matches-section" class="dashboard-card">
+
+            <div class="card-heading">
+              <div class="heading-icon">◎</div>
+
+              <div>
+                <h2>Resume Match Scores</h2>
+
+                <p>
+                  Compare applicants' skills and resume match percentages
+                  against your job requirements.
+                </p>
+              </div>
+            </div>
+
+            <div id="matchResultsList" class="items">
+              <p>Match results will appear here.</p>
+            </div>
+
+          </section>
+
+          <!-- INTERVIEW HISTORY -->
+          <section id="history-section" class="dashboard-card">
+
+            <div class="card-heading">
+              <div class="heading-icon">◷</div>
+
+              <div>
+                <h2>Interview Evaluation History</h2>
+
+                <p>
+                  Review saved interview scores, recommendations,
+                  questions, applicant answers, and AI assessments.
+                </p>
+              </div>
+            </div>
+
+            <div class="history-information">
+
+              <div class="history-icon">ⓘ</div>
+
+              <div>
+                <h3>Interview Records</h3>
+
+                <p>
+                  Open an applicant's interview evaluation history
+                  from their applicant card above.
+                </p>
+
+                <p>
+                  Each history record contains its evaluation date,
+                  overall score, recommendation, and full AI evaluation.
+                </p>
+              </div>
+
+            </div>
+
+          </section>
+
+          <footer class="dashboard-footer">
+            <p>© 2026 AI-Powered Recruitment Agent. All rights reserved.</p>
+          </footer>
+
+        </div>
+
+      </main>
+
+    </div>
+
+    <!-- RECRUITER CHATBOT -->
+    <div class="chatbot-widget" id="chatbotWidget">
+
+      <button
+        class="chatbot-toggle"
+        id="chatbotToggle"
+        type="button"
+        aria-label="Open AI Recruitment Assistant"
+        aria-expanded="false">
+        💬
+      </button>
+
+      <div
+        class="chatbot-panel"
+        id="chatbotPanel"
+        role="dialog"
+        aria-label="AI Recruitment Assistant"
+        hidden>
+
+        <div class="chatbot-header">
+
+          <div>
+            <h3 id="chatbotTitle">AI Recruitment Assistant</h3>
+            <p id="chatbotSubtitle">Your hiring assistant</p>
+          </div>
+
+          <div class="chatbot-header-actions">
+
+            <button
+              id="chatbotClear"
+              type="button"
+              title="Clear conversation"
+              aria-label="Clear conversation">
+              ↻
+            </button>
+
+            <button
+              id="chatbotClose"
+              type="button"
+              title="Close chatbot"
+              aria-label="Close chatbot">
+              ×
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          class="chatbot-messages"
+          id="chatbotMessages"
+          aria-live="polite"
+          aria-relevant="additions text">
+        </div>
+
+        <form class="chatbot-input-area" id="chatbotForm">
+
+          <textarea
+            id="chatbotInput"
+            rows="2"
+            maxlength="2000"
+            placeholder="Ask about hiring, candidates or interviews..."
+            aria-label="Type your message"
+            required>
+          </textarea>
+
+          <button
+            class="chatbot-send"
+            id="chatbotSend"
+            type="submit">
+            Send
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <script src="recruiter-dashboard.js"></script>
+    <script src="chatbot.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Register | AI Resume Matcher</title>
+
+  <link rel="stylesheet" href="register.css" />
+</head>
+
+<body>
+  <main class="auth-page">
+    <section class="auth-card">
+
+      <a href="home.html" class="brand">
+        <span>AI</span> -Powered Recruitment Agent
+      </a>
+
+      <div class="auth-header">
+        <h1>Create your account</h1>
+        <p class="auth-subtitle">
+          Join us and discover smarter resume matching.
+        </p>
+      </div>
+
+      <form id="registerForm">
+
+        <div class="form-group">
+          <label for="registerName">Full name</label>
+          <input
+            id="registerName"
+            name="name"
+            type="text"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            maxlength="100"
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="registerEmail">Email address</label>
+          <input
+            id="registerEmail"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input
+            id="registerPassword"
+            name="password"
+            type="password"
+            placeholder="Create a password (minimum 8 characters)"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="72"
+            required />
+        </div>
+
+        <div class="role-section">
+          <label class="role-heading">Register as</label>
+
+          <div class="role-options">
+
+            <label class="role-card selected" for="applicantRole">
+              <input
+                type="radio"
+                id="applicantRole"
+                name="registerRole"
+                value="applicant"
+                checked
+                required />
+
+              <div class="role-icon applicant-icon">
+                <span>👨‍💻</span>
+              </div>
+
+              <div class="role-content">
+                <h3>Applicant</h3>
+                <p>Find jobs and match resumes</p>
+              </div>
+
+              <span class="role-check">✓</span>
+            </label>
+
+            <label class="role-card" for="recruiterRole">
+              <input
+                type="radio"
+                id="recruiterRole"
+                name="registerRole"
+                value="recruiter" />
+
+              <div class="role-icon recruiter-icon">
+                <span>💼</span>
+              </div>
+
+              <div class="role-content">
+                <h3>Recruiter</h3>
+                <p>Post and manage jobs</p>
+              </div>
+
+              <span class="role-check">✓</span>
+            </label>
+
+          </div>
+        </div>
+
+        <button type="submit" class="primary-button">
+          Create Account
+          <span>→</span>
+        </button>
+
+      </form>
+
+      <p id="message" class="message" role="status"></p>
+
+      <p class="switch-page">
+        Already have an account?
+        <a href="login.html">Sign in</a>
+      </p>
+
+      <a href="home.html" class="back-link">
+        ← Back to home
+      </a>
+
+    </section>
+  </main>
+
+  <script>
+    const roleCards = document.querySelectorAll(".role-card");
+
+    roleCards.forEach((card) => {
+      card.addEventListener("change", () => {
+        roleCards.forEach((item) => {
+          item.classList.remove("selected");
+        });
+
+        card.classList.add("selected");
+      });
+    });
+  </script>
+
+  <script src="auth.js"></script>
+</body>
+</html>
